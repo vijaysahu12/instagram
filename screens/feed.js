@@ -122,7 +122,9 @@ export default function FeedScreen() {
                             <TouchableOpacity
                                 onPress={() => {
                                         alert('clicked author')
-                                        
+                                        this.props.navigation.navigator('User', {
+                                            userId : item.authorId
+                                        })
                                     }}>
                                 <Text>{item.author}</Text>
                             </TouchableOpacity>
