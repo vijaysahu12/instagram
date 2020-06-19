@@ -8,9 +8,8 @@ import { RectButton, ScrollView, FlatList } from 'react-native-gesture-handler';
 
 import { f, auth, database, storage } from '../config/config'
 import UploadScreen from './upload';
-import PhotoList from '../components/photoList';
 
-export default function UserProfileScreen({route,navigation }) {
+export default function Comments({route,navigation }) {
 
     
     const [loggedIn, setLoggedIn] = React.useState(true);
@@ -67,18 +66,15 @@ export default function UserProfileScreen({route,navigation }) {
         return (
             
             <View style={{ flex: 1 , paddingTop: 10  }}>
-                <View style={{ justifyContent:'space-evenly' , paddingBottom : 10 , alignItems: 'center', borderBottomColor: 'grey' , borderBottomWidth: 2 , flexDirection: 'row' }}>
-                <Image source={{ uri: avatar }} style={{ marginLeft: 10, width: 100, height: 100, borderRadius: 50 }}></Image>
-                    <View style={{ marginRight: 10 }}>
-                        <Text>{name}</Text>
-                        <Text>{userName}</Text>
-                    </View>
-                </View>
+               <Text>Comments</Text>
             </View>
         )
     } else {
         return (
-            <PhotoList isUser={true} userId ={userId} navigation={navigation}  />
+            <View style={{ flex:1 , flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: 'green' }}>
+                <Text>Loading Comments....</Text>
+                {/* <Button onPress={()=> { navigation.goBack() }} title="Go Back" > </Button> */}
+            </View>
         )
     }
 }

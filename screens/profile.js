@@ -5,17 +5,17 @@ import { useEffect } from 'react';
 
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { RectButton, ScrollView, FlatList } from 'react-native-gesture-handler';
-
+import  PhotoList from '../components/photoList'
 import { f, auth, database, storage } from '../config/config'
 import UploadScreen from './upload';
 
-export default function ProfileScreen() {
+export default function ProfileScreen({navigation}) {
 
     const [refresh, setRefresh] = React.useState(false);
     const [photofeed, setPhotoFeed] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
     const [loggedIn, setLoggedIn] = React.useState(true);
-
+    const [userId,setUserId] = React.useState('');
     useEffect(effect => {
         f.auth().onAuthStateChanged((user) => {
             if (user) {
@@ -24,6 +24,7 @@ export default function ProfileScreen() {
             } else {
                 // not logged in 
                 setLoggedIn(false);
+                setUserId(user.uid);
             }
         });
     }, []);
@@ -52,7 +53,7 @@ export default function ProfileScreen() {
                             <Text style={styles.TouchableOText}>Edit Profile</Text>
                         </TouchableOpacity>
                         <TouchableOpacity 
-                        onPress={() => {this.props.navigation.navigate(UploadScreen)}}
+                        onPress={() => {navigation.navigate('')}}
                         style={styles.TouchableOUpload }>
                             <Text style={{ textAlign: 'center'  ,color: 'white'}}>Upload New +</Text>
                         </TouchableOpacity>
@@ -60,8 +61,8 @@ export default function ProfileScreen() {
                     </View>
                 </View>
 
-                <View style={{flex:1, justifyContent: 'center', alignItems: 'center', backgroundColor:'green'}}>
-                    <Text>Loading Photos....</Text>
+                <View style={{flex:1}}>
+                    <PhotoList isUser={true} userId ={userId} navigation={navigation}  />
                 </View>
             </View>
         )
