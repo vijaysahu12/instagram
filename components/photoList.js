@@ -10,8 +10,9 @@ import * as Permissions from 'expo-permissions';
 import { f, auth, database, storage } from '../config/config'
 import Constants, { UserInterfaceIdiom } from 'expo-constants';
 import { preventAutoHide } from 'expo-splash-screen';
+import Comments from '../screens/Comments';
 
-export default function PhotoList({ isUser, userId }) {
+export default function PhotoList({ isUser, userId ,  navigation  }) {
 
     const [refresh, setRefresh] = React.useState(false);
     const [photofeed, setPhotoFeed] = React.useState([]);
@@ -125,12 +126,8 @@ export default function PhotoList({ isUser, userId }) {
     };
 
     return (
-
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-
-
             <View>
-
                 <FlatList
                     refreshing={refresh}
                     onRefresh={loadNew}
@@ -161,11 +158,8 @@ export default function PhotoList({ isUser, userId }) {
                                 <Text>{item.caption}</Text>
                                 <TouchableOpacity
                                     onPress={() => {
-                                        // navigation.navigate("Comments", {
-                                        //     userId: item.authorId
-                                        // })
                                         navigation.navigate('Comments', {
-                                            userId: item.authorId
+                                            photoId: item.id
                                         });
                                     }}
                                 >

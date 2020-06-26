@@ -9,7 +9,7 @@ import UploadScreen from '../screens/upload';
 import ProfileScreen from '../screens/profile';
 
 const BottomTab = createBottomTabNavigator();
-const INITIAL_ROUTE_NAME = 'Home';
+const INITIAL_ROUTE_NAME = 'profile';
 
 export default function BottomTabNavigator({ navigation, route }) {
   // Set the header title on the parent stack navigator depending on the
@@ -56,10 +56,16 @@ function getHeaderTitle(route) {
   console.log('routeName: '+ routeName);
   switch (routeName) {
     case 'Home':
-      return 'How to get started';
-      case 'Profile':
-        return 'Profile';
-      case 'UserProfileScreen':
-        return 'Profile';
+      return 'Home';
+    case 'feed':
+      return 'Posts';
+      case 'upload':
+        return 'New Post';
+    case 'profile':
+      return 'Profile';
+    case 'UserProfileScreen':
+      return 'My Profile';
+    case 'comments': 
+    return 'comments'
   }
 }

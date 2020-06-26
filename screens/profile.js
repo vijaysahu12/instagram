@@ -16,17 +16,35 @@ export default function ProfileScreen({navigation}) {
     const [loading, setLoading] = React.useState(true);
     const [loggedIn, setLoggedIn] = React.useState(true);
     const [userId,setUserId] = React.useState('');
+
+    const[user,setUser] = React.useState({
+        userId: '',
+        Name: 'Vijay Sahu',
+        Description: 'july 9 Wish Me @Scorpion @vijaysahu.in',
+        portfolioUrl: 'www.vijaysahu.in',
+        Posts: 109,
+        Followers: 100,
+        Following: 52,
+        profileImage: 'https://api.adorable.io/avatars/285/test@user.k.png'
+    })
     useEffect(effect => {
         f.auth().onAuthStateChanged((user) => {
+            console.log('userDetails: ' + JSON.stringify(user))
             if (user) {
                 // logged in
                 setLoggedIn(true);
+                setUserId(user.uid);
+                console.log(user.uid);
+                setUser({userId: user.uid});
             } else {
                 // not logged in 
                 setLoggedIn(false);
                 setUserId(user.uid);
+                console.log(user.uid);
+                setUser({userId: user.uid});
             }
         });
+        console.log('userId: ' + userId);
     }, []);
 
 
@@ -34,35 +52,51 @@ export default function ProfileScreen({navigation}) {
         return (
             <View style={styles.container}>
                 <View style={{ flex: 1 }}>
-                    {/* <View style={{ height: 70, paddingTop: 30, backgroundColor: 'white', borderColor: 'lightgrey', borderBottomWidth: 0.5, justifyContent: 'center', alignItems: 'center' }}>
-                        <Text>Profile</Text>
-                    </View> */}
-                    <View style={{ justifyContent: 'space-evenly', alignItems: 'center', flexDirection: "row", padding: 10 }} >
-                        <Image source={{ uri: 'https://api.adorable.io/avatars/285/test@user.i.png' }} style={{ marginLeft: 10, width: 100, height: 100, borderRadius: 50 }}></Image>
+                    <View style={{ justifyContent: 'space-between', alignItems: 'center', flexDirection: "row", padding: 10 }} >
+                        <Image source={{ uri: user.profileImage }} style={{ marginLeft: 10, width: 100, height: 100, borderRadius: 50 }}></Image>
                         <View style={{ marginRight: 10 }}>
-
-                            <Text>Name</Text>
-                            <Text>@VijaySahu</Text>
+                            <Text style={{textAlign:'center'}}>{user.Posts}</Text>
+                            <Text>Posts</Text>
+                        </View>
+                        <View style={{ marginRight: 10 }}>
+                            <Text style={{textAlign:'center'}}>{user.Followers}</Text>
+                            <Text>Followers</Text>
+                        </View>
+                        <View style={{ marginRight: 10 }}>
+                            <Text style={{textAlign:'center'}}>{user.Following}</Text>
+                            <Text>Following</Text>
                         </View>
                     </View>
-                    <View style={{ paddingBottom: 20, borderBottomWidth: 1 }}>
+                    <View style={{ justifyContent: 'flex-start', alignItems: 'flex-start', flexDirection: "column", padding: 10 }} >
+                        <Text>{user.Name}</Text>
+                        <Text>{user.Description}</Text>
+                        <Text>{user.portfolioUrl}</Text>
+                    </View>
+                    <View style={{ justifyContent: 'flex-start', alignItems: 'flex-start', flexDirection: "row", padding: 10 }} >
                         <TouchableOpacity style={styles.TouchableO}>
                             <Text style={styles.TouchableOText}>Logout</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.TouchableO}>
+                        <TouchableOpacity 
+                        
+
+                        onPress={() => {
+                            navigation.navigate('EditUserProfile', {
+                                userId: userId
+                            });
+                        }}
+                        
+                        style={styles.TouchableO}>
                             <Text style={styles.TouchableOText}>Edit Profile</Text>
                         </TouchableOpacity>
                         <TouchableOpacity 
-                        onPress={() => {navigation.navigate('')}}
+                        onPress={() => {navigation.navigate('Root', { screen: 'UploadScreen'})}}
                         style={styles.TouchableOUpload }>
                             <Text style={{ textAlign: 'center'  ,color: 'white'}}>Upload New +</Text>
                         </TouchableOpacity>
-
-                    </View>
-                </View>
-
-                <View style={{flex:1}}>
-                    <PhotoList isUser={true} userId ={userId} navigation={navigation}  />
+                    </View>  
+                    <View style={{ flex:1, paddingBottom: 2, borderBottomWidth: 1 , flexDirection:'row' , justifyContent: 'center', alignItems: 'flex-start'}}>
+                        {/* <PhotoList isUser={true} userId ={userId} navigation={navigation}  /> */}
+                    </View> 
                 </View>
             </View>
         )
@@ -104,21 +138,24 @@ const styles = StyleSheet.create({
     },
     TouchableO: {
         marginTop: 10,
-        marginHorizontal: 40,
+        marginHorizontal: 4,
         paddingVertical: 15,
         borderRadius: 20,
         borderColor: 'grey',
-        borderWidth: 1.5
-    }, TouchableOText: {
+        borderWidth: 1.5,
+        width: "32%"
+    }, 
+    TouchableOText: {
         textAlign: 'center',
         color: 'grey'
     },
     TouchableOUpload: {
         marginTop: 10,
-        marginHorizontal: 40,
-        paddingVertical: 35,
+        marginHorizontal: 4,
+        paddingVertical: 15,
         borderRadius: 20,
         backgroundColor: 'grey',
-        borderWidth: 1.5
+        borderWidth: 1.5,
+        width:"32%"
     }
 });

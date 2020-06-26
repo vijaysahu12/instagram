@@ -1,15 +1,11 @@
-import { Ionicons } from '@expo/vector-icons';
-import * as WebBrowser from 'expo-web-browser';
 import *  as React from 'react';
 import { useEffect } from 'react';
 
 import { StyleSheet, Text, View, Image, ActivityIndicator } from 'react-native';
-import { RectButton, ScrollView, FlatList, TouchableOpacity, TextInput } from 'react-native-gesture-handler';
+import { TouchableOpacity, TextInput } from 'react-native-gesture-handler';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
-import { f, auth, database, storage } from '../config/config'
-import Constants, { UserInterfaceIdiom } from 'expo-constants';
-import { preventAutoHide } from 'expo-splash-screen';
+import { f, database, storage } from '../config/config'
 
 export default function UploadScreen() {
 
@@ -24,7 +20,7 @@ export default function UploadScreen() {
   const [imageId, setImageId] = React.useState(null);
 
   const [loggedIn, setLoggedIn] = React.useState(true);
-  const [permission, setPermission] = React.useState({
+  const [, setPermission] = React.useState({
     status: false,
     camera: false,
     cameraRoll: false
@@ -41,7 +37,7 @@ export default function UploadScreen() {
   });
   // const [fileType, setFileType] = React.useState('');
 
-  useEffect(effect => {
+  useEffect(() => {
     setState({
       imageSelected: false,
       uri: '',
@@ -130,7 +126,6 @@ export default function UploadScreen() {
   };
   const uploadImage = async (uri) => {
     var userId = f.auth().currentUser.uid;
-    var uniqueImageId = imageId;
 
     var re = /(?:\.([^.]+))?$/;
     var ext = re.exec(uri)[1];
@@ -282,31 +277,4 @@ export default function UploadScreen() {
 }
 
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fafafa',
-  },
-  contentContainer: {
-    paddingTop: 15,
-  },
-  optionIconContainer: {
-    marginRight: 12,
-  },
-  option: {
-    backgroundColor: '#fdfdfd',
-    paddingHorizontal: 15,
-    paddingVertical: 15,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderBottomWidth: 0,
-    borderColor: '#ededed',
-  },
-  lastOption: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  optionText: {
-    fontSize: 15,
-    alignSelf: 'flex-start',
-    marginTop: 1,
-  },
-});
+

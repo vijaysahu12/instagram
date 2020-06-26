@@ -11,6 +11,7 @@ import UserProfileScreen from './screens/userProfile';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { HeaderBackButton } from '@react-navigation/stack';
 import Comments from './screens/Comments';
+import EditUserProfile from './screens/EditUserProfile';
 const Stack = createStackNavigator();
 
 export default function App(props) {
@@ -45,12 +46,7 @@ export default function App(props) {
             headerTintColor: '#fff',
             headerTitleStyle: {
               fontWeight: 'bold',
-            },
-            headerLeft: (props) => (
-              <HeaderBackButton {...props} onPress={() => {
-                navigation.popToTop();
-              }} />
-            ),
+            }
           })}>
             <Stack.Screen name="Root"
               component={BottomTabNavigator}
@@ -63,8 +59,6 @@ export default function App(props) {
               }}
             />
             <Stack.Screen name="UserProfileScreen"
-
-
               component={UserProfileScreen}
               {...props}
               options={{
@@ -78,11 +72,22 @@ export default function App(props) {
             />
 
             <Stack.Screen name="Comments"
-
               component={Comments}
               {...props}
               options={{
-                title: 'Profile',
+                title: 'Comments',
+                transitionSpec: {
+                  open: config,
+                  close: config,
+                },
+              }
+              }
+            />
+            <Stack.Screen name="EditUserProfile"
+              component={EditUserProfile}
+              {...props}
+              options={{
+                title: 'Edit Profile',
                 transitionSpec: {
                   open: config,
                   close: config,
@@ -105,10 +110,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
-
-
-
-
 
 const config = {
   animation: 'spring',
